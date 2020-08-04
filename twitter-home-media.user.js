@@ -5,31 +5,54 @@
 // @version      0.1
 // @description  Remove text-only tweet on the flow of my Twitter home
 // @author       UtopicPanther
-// @match        https://twitter.com/home
+// @match        https://twitter.com/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
+    let intersectionObserver;
+
     const removeTweet = article => {
+        article.classList.add('mmfth_hide');
+
         const div = article.parentElement.parentElement;
 
-        if (div.offsetTop >= window.pageYOffset)
-            div.style.display = "none";
+        //console.log("hide%d %O\n\n%s",Math.random(), article, "");
+        //div.style.background = "red";
+        div.style.display = "none";
+    }
+
+    const isTweetOnlyText = i => {
+        let haveImages = Array.from(i.querySelectorAll('img')).some(img => {
+            if (!img.src.match(/^[a-z]*:\/\/[^\/]*\/profile_images/) &&
+                !img.src.match(/^[a-z]*:\/\/[^\/]*\/emoji/)) {
+                return true;
+            }
+        });
+
+        if (!haveImages)
+            haveImages = (i.querySelector('div[data-testid=tweetPhoto]') != null);
+
+        if (!haveImages) {
+             haveImages = Array.from(i.querySelectorAll('a')).some(a => {
+                 if (a.getAttribute('href').match(/^\/[^\/]*\/status\/[0-9]*\/photo\//)) {
+                     return true;
+                 }
+             });
+        }
+
+        return (!haveImages && i.querySelectorAll('video').length == 0);
     }
 
     const findTweetsForRemove = () => {
-        document.querySelectorAll('article').forEach(i => {
-            const media = Array.from(i.querySelectorAll('img')).some(img => {
-                if (!img.src.match(/^[a-z]*:\/\/[^\/]*\/profile_images/) &&
-                    !img.src.match(/^[a-z]*:\/\/[^\/]*\/emoji/)) {
-                    return true;
-                }
-            });
-
-            if (!media && i.querySelectorAll('video').length == 0)
-                removeTweet(i);
+        document.querySelectorAll('article:not(.mmfth_hide)').forEach(i => {
+            if (isTweetOnlyText(i)) {
+                //console.log("add observ %O", i);
+                //intersectionObserver.observe(i);
+                removeTweet(i)
+            }
         });
     }
 
@@ -37,8 +60,23 @@
         alert("Media mode for Twitter home will be actived. After your flow loaded, click Yes.");
 
         const targetNode = document.querySelector('article').parentElement.parentElement.parentElement.parentElement;
-        const config = { childList: true, subtree: true };
 
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 1.0
+        }
+        intersectionObserver = new IntersectionObserver((es, o) => {
+            es.forEach(i => {
+                if (isTweetOnlyText(i.target))
+                    removeTweet(i.target)
+                o.unobserve(i.target);
+            });
+        }, options);
+
+        findTweetsForRemove();
+
+        const config = { childList: true, subtree: true };
         const observer = new MutationObserver((mutationsList, observer) => {
             findTweetsForRemove();
         });
