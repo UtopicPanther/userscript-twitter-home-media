@@ -6,6 +6,8 @@ Script need some time to startup. After started, a dialog will be shown.
 
 MUST be loaded after twitter loaded the flow, or not working.
 
+Install URL: https://raw.githubusercontent.com/UtopicPanther/userscript-twitter-home-media/master/twitter-home-media.user.js
+
 ## Twitter 主页面上的媒体模式 （ALPHA！）
 
 在我的 Twitter 主页面上删除纯文本的 Tweet
@@ -13,6 +15,8 @@ MUST be loaded after twitter loaded the flow, or not working.
 脚本需要一定的时间才能启动。启动后，将弹出一个对画框
 
 **必须** 在 Twitter 加载出时间线后再启动，否则不工作
+
+安装 URL：https://raw.githubusercontent.com/UtopicPanther/userscript-twitter-home-media/master/twitter-home-media.user.js
 
 ### Firefox tampermonkey notice
 
