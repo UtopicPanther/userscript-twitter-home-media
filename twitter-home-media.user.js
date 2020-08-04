@@ -2,7 +2,7 @@
 // @name         Media mode for Twitter home
 // @namespace    https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL   https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version      0.2
+// @version      0.3
 // @description  Remove text-only tweet on the flow of my Twitter home
 // @author       UtopicPanther
 // @match        https://twitter.com/*
@@ -43,7 +43,12 @@
              });
         }
 
-        return (!haveImages && i.querySelectorAll('video').length == 0);
+        let haveVideo = (i.querySelectorAll('video').length != 0);
+
+        if (!haveVideo)
+            haveVideo = (i.querySelector('div[role=progressbar]') != null);
+
+        return (!haveImages && !haveVideo);
     }
 
     const findTweetsForRemove = () => {
