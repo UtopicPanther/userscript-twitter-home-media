@@ -30,7 +30,9 @@ Due to CSP, maybe you need set `security.csp.enable` in your Firefox `about:conf
 
 ### Install
 
-Github: https://raw.githubusercontent.com/UtopicPanther/userscript-twitter-home-media/master/twitter-home-media.user.js 
+Github: https://raw.githubusercontent.com/UtopicPanther/userscript-twitter-home-media/master/twitter-home-media.user.js
+
+GreasyFork: https://greasyfork.org/en/scripts/408251-media-mode-for-twitter-home
 
 ### COPYING
 
