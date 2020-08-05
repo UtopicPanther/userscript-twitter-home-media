@@ -4,7 +4,7 @@
 // @name         Media mode for Twitter home
 // @namespace    https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL   https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version      0.3.2
+// @version      0.4
 // @description  Remove text-only tweet on the flow of my Twitter home
 // @author       UtopicPanther
 // @match        https://*.twitter.com/*
@@ -15,14 +15,11 @@
 (function() {
     'use strict';
 
-    let intersectionObserver;
+    //let intersectionObserver;
 
     const removeTweet = article => {
         article.classList.add('mmfth_hide');
-
         const div = article.parentElement.parentElement;
-
-        //console.log("hide%d %O\n\n%s",Math.random(), article, "");
         //div.style.background = "red";
         div.style.display = "none";
     }
@@ -55,17 +52,21 @@
     }
 
     const findTweetsForRemove = () => {
-        document.querySelectorAll('article:not(.mmfth_hide)').forEach(i => {
-            if (isTweetOnlyText(i)) {
-                //console.log("add observ %O", i);
-                //intersectionObserver.observe(i);
-                removeTweet(i)
-            }
-        });
+        if (location.pathname.startsWith('/home') ||
+            location.pathname.startsWith('/i/list/')) {
+            document.querySelectorAll('article:not(.mmfth_hide)').forEach(i => {
+                if (isTweetOnlyText(i)) {
+                    //console.log("add observ %O", i);
+                    //intersectionObserver.observe(i);
+                    removeTweet(i);
+                }
+            });
+        }
     }
 
     const startObserver = () => {
-        const targetNode = document.querySelector('article').parentElement.parentElement.parentElement.parentElement;
+        //const targetNode = document.querySelector('article').parentElement.parentElement.parentElement.parentElement;
+        const targetNode = document.documentElement || document.body;
 
         findTweetsForRemove();
 
