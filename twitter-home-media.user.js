@@ -4,11 +4,12 @@
 // @name         Media mode for Twitter home
 // @namespace    https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL   https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version      0.3.1
+// @version      0.3.2
 // @description  Remove text-only tweet on the flow of my Twitter home
 // @author       UtopicPanther
 // @match        https://*.twitter.com/*
 // @grant        none
+// @run-at       document-idle
 // ==/UserScript==
 
 (function() {
@@ -63,11 +64,22 @@
         });
     }
 
-    setTimeout(() => {
-        alert("Media mode for Twitter home will be actived. After your flow loaded, click Yes.");
-
+    const startObserver = () => {
         const targetNode = document.querySelector('article').parentElement.parentElement.parentElement.parentElement;
 
+        findTweetsForRemove();
+
+        const config = { childList: true, subtree: true };
+        const observer = new MutationObserver((mutationsList, observer) => {
+            findTweetsForRemove();
+        });
+        observer.observe(targetNode, config);
+    }
+
+    setTimeout(() => {
+        alert("Media mode for Twitter home will be actived. After your flow loaded, click Yes.");
+        startObserver();
+/*
         const options = {
             root: null,
             rootMargin: '0px',
@@ -80,13 +92,6 @@
                 o.unobserve(i.target);
             });
         }, options);
-
-        findTweetsForRemove();
-
-        const config = { childList: true, subtree: true };
-        const observer = new MutationObserver((mutationsList, observer) => {
-            findTweetsForRemove();
-        });
-        observer.observe(targetNode, config);
-    }, 6000);
+*/
+    }, 4000);
 })();
