@@ -1,3 +1,5 @@
+// vim: set ts=4 sw=4 expandtab:
+
 // ==UserScript==
 // @name         Media mode for Twitter home
 // @namespace    https://github.com/UtopicPanther/userscript-twitter-home-media
