@@ -4,10 +4,11 @@
 // @name         Media mode for Twitter home
 // @namespace    https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL   https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version      0.4
-// @description  Remove text-only tweet on the flow of my Twitter home
+// @version      0.4.1
+// @description  Remove text-only tweet on the flow of Twitter home/list
 // @author       UtopicPanther
-// @match        https://*.twitter.com/*
+// @match        https://twitter.com/*
+// @match        https://mobile.twitter.com/*
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
