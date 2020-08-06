@@ -12,7 +12,7 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.5.1
+// @version            0.5.2
 // @author             UtopicPanther
 // @match              https://twitter.com/*
 // @match              https://mobile.twitter.com/*
@@ -93,7 +93,7 @@
 
     const findTweetsForRemove = () => {
         if (location.pathname.startsWith('/home') ||
-            location.pathname.startsWith('/i/list/')) {
+            location.pathname.startsWith('/i/lists/')) {
             document.querySelectorAll('article:not(.mmfth_hide)').forEach(i => {
                 if (isTweetOnlyText(i)) {
                     removeTweet(i);
