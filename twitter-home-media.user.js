@@ -12,12 +12,12 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.5.4
+// @version            0.6.0
 // @author             UtopicPanther
 // @license            GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match              https://twitter.com/*
 // @match              https://mobile.twitter.com/*
-// @grant              none
+// @grant              GM_registerMenuCommand
 // @run-at             document-idle
 // ==/UserScript==
 
@@ -49,11 +49,14 @@
 (function() {
     'use strict';
 
+    let hide = true;
+
     const removeTweet = article => {
         article.classList.add('mmfth_hide');
         const div = article.parentElement.parentElement;
-        //div.style.background = "red";
-        div.style.display = "none";
+        div.style.background = "red";
+        if (hide)
+            div.style.display = "none";
     }
 
     const isTweetOnlyText = i => {
@@ -117,6 +120,18 @@
         });
         observer.observe(targetNode, config);
     }
+
+    GM_registerMenuCommand("Show/Hide text-only tweets", () => {
+        hide = !hide;
+        alert("Text-only tweers will be " + (hide ? "hidden" : "shown (with red background)"));
+        if (hide) {
+            findTweetsForRemove();
+        } else {
+            document.querySelectorAll('.mmfth_hide').forEach(i => {
+                i.parentElement.parentElement.style.display = "";
+            });
+        }
+    });
 
     setTimeout(() => {
         startObserver();
