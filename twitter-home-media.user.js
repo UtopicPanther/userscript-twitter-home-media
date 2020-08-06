@@ -12,7 +12,7 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.5.3
+// @version            0.5.4
 // @author             UtopicPanther
 // @license            GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match              https://twitter.com/*
@@ -84,7 +84,9 @@
 
         try {
             const tweet = i.querySelector('div[data-testid=tweet]');
-            const middle = tweet.children[1].children[1].children[1];
+            const tmp = tweet.children[1].children[1];
+            const middle = tmp.children[tmp.length - 2];
+
             if (middle.children.length > 0)
                 haveNonEmptyMiddle = true;
         } catch (e) {}
