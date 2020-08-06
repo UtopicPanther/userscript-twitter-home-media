@@ -12,7 +12,7 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.6.0
+// @version            0.6.1
 // @author             UtopicPanther
 // @license            GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match              https://twitter.com/*
@@ -124,13 +124,9 @@
     GM_registerMenuCommand("Show/Hide text-only tweets", () => {
         hide = !hide;
         alert("Text-only tweers will be " + (hide ? "hidden" : "shown (with red background)"));
-        if (hide) {
-            findTweetsForRemove();
-        } else {
-            document.querySelectorAll('.mmfth_hide').forEach(i => {
-                i.parentElement.parentElement.style.display = "";
-            });
-        }
+        document.querySelectorAll('.mmfth_hide').forEach(i => {
+            i.parentElement.parentElement.style.display = (hide ? "none" : "");
+        });
     });
 
     setTimeout(() => {
