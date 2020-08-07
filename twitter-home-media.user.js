@@ -12,7 +12,7 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.7.0
+// @version            0.7.1
 // @author             UtopicPanther
 // @license            GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match              https://twitter.com/*
@@ -68,30 +68,26 @@
     }
 
     const isTweetOnlyText = i => {
-        let haveImages = Array.from(i.querySelectorAll('img')).some(img => {
+        if (Array.from(i.querySelectorAll('img')).some(img => {
             if (!img.src.match(/^[a-z]*:\/\/[^\/]*\/profile_images/) &&
                 !img.src.match(/^[a-z]*:\/\/[^\/]*\/emoji/)) {
                 return true;
             }
-        });
+        })) return false;
 
-        if (!haveImages)
-            haveImages = (i.querySelector('div[data-testid=tweetPhoto]') != null);
+        if (i.querySelector('div[data-testid=tweetPhoto]') != null) return false;
 
-        if (!haveImages) {
-             haveImages = Array.from(i.querySelectorAll('a')).some(a => {
-                 if (a.getAttribute('href').match(/^\/[^\/]*\/status\/[0-9]*\/photo\//)) {
-                     return true;
-                 }
-             });
-        }
+        if (Array.from(i.querySelectorAll('a')).some(a => {
+            if (a.getAttribute('href').match(/^\/[^\/]*\/status\/[0-9]*\/photo\//)) {
+                return true;
+            }
+        })) return false;
 
-        let haveVideo = (i.querySelectorAll('video').length != 0);
+        if (i.querySelector('video') != null) return false;
 
-        if (!haveVideo)
-            haveVideo = (i.querySelector('div[role=progressbar]') != null);
+        if (i.querySelector('div[role=progressbar]') != null) return false;
 
-        let haveNonEmptyMiddle = false;
+        let emptyMiddle = true;
 
         try {
             const tweet = i.querySelector('div[data-testid=tweet]');
@@ -99,10 +95,10 @@
             const middle = tmp.children[tmp.length - 2];
 
             if (middle.children.length > 0)
-                haveNonEmptyMiddle = true;
+                emptyMiddle = false;
         } catch (e) {}
 
-        return (!haveImages && !haveVideo && !haveNonEmptyMiddle);
+        return emptyMiddle;
     }
 
     const findTweetsForRemove = () => {
