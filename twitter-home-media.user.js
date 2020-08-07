@@ -12,7 +12,7 @@
 // @icon               https://i.imgur.com/bUIPv1O.jpg
 // @namespace          https://github.com/UtopicPanther/userscript-twitter-home-media
 // @supportURL         https://github.com/UtopicPanther/userscript-twitter-home-media/issues
-// @version            0.6.1
+// @version            0.7.0
 // @author             UtopicPanther
 // @license            GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match              https://twitter.com/*
@@ -59,6 +59,14 @@
             div.style.display = "none";
     }
 
+    const showTweet = article => {
+        console.log("showTweet: %O", article)
+        article.classList.remove('mmfth_hide');
+        const div = article.parentElement.parentElement;
+        div.style.background = "";
+        div.style.display = "";
+    }
+
     const isTweetOnlyText = i => {
         let haveImages = Array.from(i.querySelectorAll('img')).some(img => {
             if (!img.src.match(/^[a-z]*:\/\/[^\/]*\/profile_images/) &&
@@ -103,6 +111,11 @@
             document.querySelectorAll('article:not(.mmfth_hide)').forEach(i => {
                 if (isTweetOnlyText(i)) {
                     removeTweet(i);
+                }
+            });
+            document.querySelectorAll('.mmfth_hide').forEach(i => {
+                if (!isTweetOnlyText(i)) {
+                    showTweet(i);
                 }
             });
         }
