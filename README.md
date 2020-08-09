@@ -1,24 +1,20 @@
-## Media mode for Twitter home (Beta)
+## Media mode for Twitter home
 
 Remove text-only tweets on the flow of my Twitter home and list.
 
-Script need some time to startup. 
+Script need some time to startup.
 
-**Warning: There is no completely accurate way to detect whether a tweet contains pictures and other media. This script has a lot of redundant processing, and accidental deletion of tweets should be quite rare. But there may still be accidental deletion. If it is not acceptable, please do not use this script.**
-
-How it works: Monitor page element changes. Then retrieve all tweets that do not contain pictures and other media (such as videos) and hide them.
+How it works: Monitor page element changes. Then retrieve all tweets that do not contain pictures and other media (such as videos) and hide them. Then retrieve the previously hidden Tweets but the media was added, and restore them to display.
 
 I only tested in Firefox (disabled CSP) and Violentmonkey. User reports also work under Chrome.
 
-## Twitter 主页面上的媒体模式 （Beta）
+## Twitter 主页面上的媒体模式
 
 在我的 Twitter 主页和列表上删除纯文本的 Tweet。
 
 脚本需要一定的时间才能启动。
 
-**警告：不存在完全准确的方式探测 Tweet 是否包含图片和其他媒体。此脚本进行了大量冗余处理，出现误删除 Tweet 的情况应该是相当罕见的。但仍然可能出现误删除的情况，如果不能接受，请勿使用此脚本。**
-
-工作原理：监听页面元素变动。然后检索不包含图片和其他媒体（如视频）的全部 Tweet，将它们隐藏。
+工作原理：监听页面元素变动。然后检索不包含图片和其他媒体（如视频）的全部 Tweet，将它们隐藏。然后检索之前隐藏但媒体被添加的 Tweet，将它们重新显示。
 
 我仅在 Firefox （禁用 CSP）和 Violentmonkey 环境下测试。用户报告也在 Chrome 下工作。
 
